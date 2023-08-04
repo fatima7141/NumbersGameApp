@@ -12,8 +12,7 @@ export default function App() { // that is a functional component
   }
 
   function addGoalHandler() {
-    setCourseGoals((currentcourseGoal)=>[...currentcourseGoal, enteredGoalText,]);
-  };
+    setCourseGoals((currentcourseGoal)=>[ ...currentcourseGoal, enteredGoalText]);};
   
   
   return (
@@ -24,13 +23,11 @@ export default function App() { // that is a functional component
       </View>
       <View><Text style={styles.GoalText}>list of goals</Text></View>
       <View  style={styles.GoalsContainer}>
-      <ScrollView> 
-        {courseGoals.map((goal)=> (
-        <View key={goal} style={styles.GoalItem}>
-          <Text style={styles.GoalText}> {goal} </Text>
-        </View>
-        ))}
-      </ScrollView>
+      <FlatList data={courseGoals} renderItem={itemData=>{
+        return <View style={styles.GoalItem}>
+        <Text style={styles.GoalText}> {itemData.item} </Text>
+      </View>
+      }}alwaysBounceVertical={false}/>
       </View>
     </View>
   );
@@ -79,17 +76,4 @@ const styles = StyleSheet.create({ //Stylesheet is a builtin methode that adds v
     GoalText: {
       color:"orange"
     }
-
-
-  /*  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  dummyText:{ 
-    margin : 20, 
-    borderWidth: 2, 
-    borderColor : "green", 
-    padding: 15,}
-  */});
+});
