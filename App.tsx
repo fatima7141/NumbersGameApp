@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
 import { useState } from 'react';
 
 export default function App() { // that is a functional component
@@ -12,7 +12,7 @@ export default function App() { // that is a functional component
   }
 
   function addGoalHandler() {
-    setCourseGoals(currentcourseGoal=>[...courseGoals, enteredGoalText,]);
+    setCourseGoals((currentcourseGoal)=>[...currentcourseGoal, enteredGoalText,]);
   };
   
   
@@ -20,10 +20,17 @@ export default function App() { // that is a functional component
     <View style={styles.appContainer}/*style={styles.container}*/>
       <View style={styles.inputContainer}>
         <TextInput style={styles.TextInput} placeholder='Your course goal!' onChangeText={goalInputHandler}/>
-        <Button title="a d d G o a l " onPress={addGoalHandler}/>
+        <Button title="add Goal" onPress={addGoalHandler}/>
       </View>
-      <View style={styles.GoalsContainer}>
-        {courseGoals.map((goal)=><Text>{goal}</Text>)}
+      <View><Text style={styles.GoalText}>list of goals</Text></View>
+      <View  style={styles.GoalsContainer}>
+      <ScrollView> 
+        {courseGoals.map((goal)=> (
+        <View key={goal} style={styles.GoalItem}>
+          <Text style={styles.GoalText}> {goal} </Text>
+        </View>
+        ))}
+      </ScrollView>
       </View>
     </View>
   );
@@ -32,7 +39,7 @@ export default function App() { // that is a functional component
 const styles = StyleSheet.create({ //Stylesheet is a builtin methode that adds validation and potential performance improvements
     appContainer: {
       flex:1,
-      padding: 77,
+      paddingTop: 70,
       paddingHorizontal: 16
     },
 
@@ -50,7 +57,7 @@ const styles = StyleSheet.create({ //Stylesheet is a builtin methode that adds v
     TextInput : {
       flex:1,
       borderWidth: 2,
-      borderColor: "blue",
+      borderColor: "green",
       width: "75%",
       marginRight: 8,
       padding : 8,
@@ -58,6 +65,19 @@ const styles = StyleSheet.create({ //Stylesheet is a builtin methode that adds v
 
     GoalsContainer: {
       flex :7,
+    },
+
+    GoalItem: {
+      margin:8,
+      padding: 8,
+      borderRadius: 6,
+      backgroundColor: "green",
+      
+
+    },
+
+    GoalText: {
+      color:"orange"
     }
 
 
