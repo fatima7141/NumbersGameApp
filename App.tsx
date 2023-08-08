@@ -5,27 +5,29 @@ import { useState } from 'react';
 export default function App() { // that is a functional component
   
   const [enteredGoalText, setEnteredGoalText]=useState("");
-  const [courseGoals, setCourseGoals]= useState<string[]>([]);
+  const [courseGoals, setCourseGoals]= useState<any[]>([]); // j'ai mis trop de truc de type any pour que ca marche 
   
   function goalInputHandler(enteredText : string) {
     setEnteredGoalText(enteredText);
   }
 
   function addGoalHandler() {
-    setCourseGoals((currentcourseGoal)=>[ ...currentcourseGoal, enteredGoalText]);};
+    setCourseGoals((currentcourseGoal : any[])=>[ // a demander pour le type
+      ...currentcourseGoal, {text: enteredGoalText,
+       Key: Math.random().toString()},]);}  //Je dois reviser le math.random for the key parce que je n'ai pas trop compris 
   
   
   return (
     <View style={styles.appContainer}/*style={styles.container}*/>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.TextInput} placeholder='Your course goal!' onChangeText={goalInputHandler}/>
-        <Button title="add Goal" onPress={addGoalHandler}/>
+        <TextInput style={styles.TextInput} placeholder='Your course goal :)' onChangeText={goalInputHandler}/>
+        <Button title="add Goal" onPress={addGoalHandler}/> 
       </View>
-      <View><Text style={styles.GoalText}>list of goals</Text></View>
+      <View style={styles.ListOfGoals}><Text style={styles.ListOfGoals}>List Of Goals</Text></View>
       <View  style={styles.GoalsContainer}>
       <FlatList data={courseGoals} renderItem={itemData=>{
         return <View style={styles.GoalItem}>
-        <Text style={styles.GoalText}> {itemData.item} </Text>
+        <Text style={styles.GoalText}> {itemData.item.text} </Text>
       </View>
       }}alwaysBounceVertical={false}/>
       </View>
@@ -33,11 +35,14 @@ export default function App() { // that is a functional component
   );
 }
 
+//I really have to understand and add the keyExtractor mentioner vers la fin du viddeo 26
+
 const styles = StyleSheet.create({ //Stylesheet is a builtin methode that adds validation and potential performance improvements
     appContainer: {
       flex:1,
       paddingTop: 70,
-      paddingHorizontal: 16
+      paddingHorizontal: 16,
+      backgroundColor : `#2f4f4f`
     },
 
     inputContainer:{
@@ -47,14 +52,15 @@ const styles = StyleSheet.create({ //Stylesheet is a builtin methode that adds v
       alignItems : "center",
       marginBottom: 24,
       borderBottomWidth: 2,
-      borderColor: "green"
+      borderTopWidth: 0.01,
+      borderColor: `#90ee90`,
       
     },
 
     TextInput : {
       flex:1,
       borderWidth: 2,
-      borderColor: "green",
+      borderColor: `#90ee90`,
       width: "75%",
       marginRight: 8,
       padding : 8,
@@ -68,12 +74,18 @@ const styles = StyleSheet.create({ //Stylesheet is a builtin methode that adds v
       margin:8,
       padding: 8,
       borderRadius: 6,
-      backgroundColor: "green",
+      backgroundColor: `#3cb371`,
       
 
     },
 
     GoalText: {
-      color:"orange"
+      color:`#90ee90`
+    },
+
+    ListOfGoals: { 
+      color:`#90ee90`,
+      paddingBottom: 5,
+      fontSize: 20
     }
 });
