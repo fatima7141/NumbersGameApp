@@ -1,35 +1,39 @@
 
-import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { useState } from 'react';
+import GoalItem from './components/GoalItem'
+import GoalInput from './components/GoalInput';
 
 export default function App() { // that is a functional component
   
-  const [enteredGoalText, setEnteredGoalText]=useState("");
   const [courseGoals, setCourseGoals]= useState<any[]>([]); // j'ai mis trop de truc de type any pour que ca marche 
   
-  function goalInputHandler(enteredText : string) {
-    setEnteredGoalText(enteredText);
-  }
-
-  function addGoalHandler() {
+  function addGoalHandler(enteredGoalText : any) {
     setCourseGoals((currentcourseGoal : any[])=>[ // a demander pour le type
       ...currentcourseGoal, {text: enteredGoalText,
-       Key: Math.random().toString()},]);}  //Je dois reviser le math.random for the key parce que je n'ai pas trop compris 
+       id: Math.random().toString()},]);}  //Je dois reviser le math.random for the key parce que je n'ai pas trop compris 
   
-  
+  function deleteGoalHandler(id : string){ //this is how to delete an element from the array
+    setCourseGoals( currentCourseGoal => {
+      return currentCourseGoal.filter((goal) => goal.id !== id);
+    });
+  }
+
   return (
     <View style={styles.appContainer}/*style={styles.container}*/>
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.TextInput} placeholder='Your course goal :)' onChangeText={goalInputHandler}/>
-        <Button title="add Goal" onPress={addGoalHandler}/> 
-      </View>
+      <GoalInput onAddGoal={addGoalHandler}/>
+      
       <View style={styles.ListOfGoals}><Text style={styles.ListOfGoals}>List Of Goals</Text></View>
       <View  style={styles.GoalsContainer}>
       <FlatList data={courseGoals} renderItem={itemData=>{
-        return <View style={styles.GoalItem}>
-        <Text style={styles.GoalText}> {itemData.item.text} </Text>
-      </View>
-      }}alwaysBounceVertical={false}/>
+        return <GoalItem text={itemData.item.text}
+        id={itemData.item.id} 
+        onDeleteitem={deleteGoalHandler}/>;
+      }}
+      keyExtractor={(item, index)=>{
+        return item.id;
+      }}
+      alwaysBounceVertical={false}/>
       </View>
     </View>
   );
@@ -70,7 +74,7 @@ const styles = StyleSheet.create({ //Stylesheet is a builtin methode that adds v
       flex :7,
     },
 
-    GoalItem: {
+    goalItem: {
       margin:8,
       padding: 8,
       borderRadius: 6,
@@ -79,7 +83,7 @@ const styles = StyleSheet.create({ //Stylesheet is a builtin methode that adds v
 
     },
 
-    GoalText: {
+    goalText: {
       color:`#90ee90`
     },
 
