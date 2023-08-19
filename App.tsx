@@ -1,111 +1,61 @@
 
-import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
-import { useState } from 'react';
-import GoalItem from './components/GoalItem'
-import GoalInput from './components/GoalInput';
 import { StatusBar } from 'expo-status-bar';
+import { StyleSheet,ImageBackground, SafeAreaView} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import StartGameScreen from './screens/StartGameScreen';
+import { useState } from 'react';
+import GameScreen from './screens/GameScreen';
+import colors from './components/colors';
+import GameOverScreen from './screens/GameOverScreen';
 
-export default function App() { // that is a functional component
-  
-  const[modalIsVisible, setModalIsVisible] =useState(false);
-  const [courseGoals, setCourseGoals]= useState<any[]>([]); // j'ai mis trop de truc de type any pour que ca marche 
-  
-  function startAddGoalHandler(){
-    setModalIsVisible(true);
+
+
+
+export default function App() { //if i set the background color here it will apear for all my pages 
+  const [userNumber, setUserNumber]= useState();
+
+  const [gameIsOver, setGameIsOver]=useState(true);
+
+  function pickedNumberHandler(pickedNumber: any){
+    setUserNumber(pickedNumber);
+    setGameIsOver(false);
   }
 
-  function endAddGoalHandler(){
-    setModalIsVisible(false);
+  function gameOverHandler(){
+    setGameIsOver(true)
   }
 
-  function addGoalHandler(enteredGoalText : any) {
-    setCourseGoals((currentcourseGoal : any[])=>[ // a demander pour le type
-      ...currentcourseGoal, {text: enteredGoalText,
-       id: Math.random().toString()},]);
-       endAddGoalHandler();
-      }  //Je dois reviser le math.random for the key parce que je n'ai pas trop compris 
-  
-  function deleteGoalHandler(id : any){ //this is how to delete an element from the array
-    setCourseGoals( currentCourseGoal => {
-      return currentCourseGoal.filter((goal) => goal.id !== id);
-    });
+  let screen = <StartGameScreen onPickedNumber={pickedNumberHandler}/>
+
+  if(userNumber) {
+    screen=<GameScreen userNumber={userNumber} onGameOver={gameOverHandler}/> 
   }
-// button dont take style but can take color and title
+
+  if (gameIsOver && userNumber){
+    screen = <GameOverScreen/>
+  }
+
+  
+  
+
   return (
-    <>
-    <StatusBar style="auto"/>
-    <View style={styles.appContainer}/*style={styles.container}*/>
-      <Button title="Add New Goal" color="orange" onPress={startAddGoalHandler}/> 
-      <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} onCancel={endAddGoalHandler}/>
-      <View style={styles.ListOfGoals}><Text style={styles.ListOfGoals}>List Of Goals</Text></View>
-      <View  style={styles.GoalsContainer}>
-      <FlatList data={courseGoals} renderItem={itemData=>{
-        return <GoalItem text={itemData.item.text}
-        id={itemData.item.id} 
-        onDeleteitem={deleteGoalHandler}/>;
-      }}
-      keyExtractor={(item, index)=>{
-        return item.id;
-      }}
-      alwaysBounceVertical={false}/>
-      </View>
-    </View>
-    </>
+    <LinearGradient colors={[colors.myBlue,colors.otherPurple ]} style={styles.rootScreen}>
+      <ImageBackground source={require('./assets/images/dices.jpg')}
+      resizeMode="cover"
+      style={styles.rootScreen}
+      imageStyle={styles.backgroundImage}>
+        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
+      </ImageBackground>
+    </LinearGradient>
   );
 }
 
-//I really have to understand and add the keyExtractor mentioner vers la fin du viddeo 26
+const styles = StyleSheet.create({
+  rootScreen: {
+    flex: 1,
+  },
 
-const styles = StyleSheet.create({ //Stylesheet is a builtin methode that adds validation and potential performance improvements
-    appContainer: {
-      flex:1,
-      paddingTop: 70,
-      paddingHorizontal: 16,
-      backgroundColor : `#2f4f4f`
-    },
-
-    inputContainer:{
-      flex:1,
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems : "center",
-      marginBottom: 24,
-      borderBottomWidth: 2,
-      borderTopWidth: 0.01,
-      borderColor: `#90ee90`,
-      
-    },
-
-    TextInput : {
-      flex:1,
-      borderWidth: 2,
-      borderColor: `#90ee90`,
-      width: "75%",
-      marginRight: 8,
-      padding : 8,
-    },
-
-    GoalsContainer: {
-      flex :7,
-    },
-
-    goalItem: {
-      margin:8,
-      padding: 8,
-      borderRadius: 6,
-      backgroundColor: "orange",
-      
-
-    },
-
-    goalText: {
-      color:`#90ee90`
-    },
-
-    ListOfGoals: { 
-      color:`#90ee90`,
-      paddingBottom: 5,
-      paddingTop:5,
-      fontSize: 20
-    }
+  backgroundImage : {
+    opacity: 0.15
+  }
 });
