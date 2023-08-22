@@ -62,9 +62,11 @@ function GameScreen({userNumber, onGameOver}: any) {
         <NumberContainer>{currentGuess}</NumberContainer>
         <Card>
             <InstructionText>{"Higher or lower ?"}</InstructionText> 
-            <View>
-                <PrimaryButton onPress={() =>nextGuessHandler("greater")}>{"+"}</PrimaryButton>
-                <PrimaryButton onPress={() =>nextGuessHandler("lower")}>{"-"}</PrimaryButton>
+            <View style={styles.buttonsContainer}>
+                <View style={styles.buttonContainer}><PrimaryButton onPress={() =>nextGuessHandler("greater")}>{"+"}</PrimaryButton></View>
+                <View style={styles.buttonContainer}><PrimaryButton onPress={() =>nextGuessHandler("lower")}>{"-"}</PrimaryButton></View>
+                
+                
             </View> 
         </Card>
     </View>
@@ -82,6 +84,7 @@ const styles= StyleSheet.create({
 
     buttonsContainer:{
         flexDirection: "row",
+        marginTop: 20
     },
 
     buttonContainer: {

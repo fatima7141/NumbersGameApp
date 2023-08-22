@@ -3,7 +3,7 @@ import colors from "./colors";
 
 
 const Card=({children} : any) => {
-    return ( <View>{children}</View>)
+    return ( <View style={styles.inputContainer}>{children}</View>)
 }
 
 
@@ -12,7 +12,7 @@ export default Card;
 
 const styles= StyleSheet.create({
 
-    card:{
+    inputContainer:{
         justifyContent: "center", //will position the element along the main axis (top to bottom by default) 
         alignItems: "center", // will position the elements along the cross axis
         padding: 60,

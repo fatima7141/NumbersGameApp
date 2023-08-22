@@ -48,8 +48,9 @@ function StartGameScreen({onPickedNumber} : any) {
             <View style={styles.buttonsContainer}>
                 <View style={styles.buttonContainer}><PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton></View>
                 <View style={styles.buttonContainer}><PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton></View>
+                
             </View>
-    </Card>
+        </Card>
     </View>
     );
 }
@@ -85,7 +86,7 @@ const styles= StyleSheet.create({
     },
 
     buttonContainer: {
-        flex:1
+        flex:1,
     }
 })
 

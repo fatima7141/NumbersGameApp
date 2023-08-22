@@ -13,6 +13,6 @@ const styles= StyleSheet.create({
 
     instructionText:{
         color: colors.myOrange,
-        fontSize: 20,
+        fontSize: 23,
     }
 })
