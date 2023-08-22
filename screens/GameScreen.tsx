@@ -8,6 +8,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import Card from "../components/Card";
 import InstructionText from "../components/InstructionText";
 
+
 /* function Card({ children }: CardProps) {
     return (
         <View style={styles.card}>
@@ -65,8 +66,6 @@ function GameScreen({userNumber, onGameOver}: any) {
             <View style={styles.buttonsContainer}>
                 <View style={styles.buttonContainer}><PrimaryButton onPress={() =>nextGuessHandler("greater")}>{"+"}</PrimaryButton></View>
                 <View style={styles.buttonContainer}><PrimaryButton onPress={() =>nextGuessHandler("lower")}>{"-"}</PrimaryButton></View>
-                
-                
             </View> 
         </Card>
     </View>
@@ -88,7 +87,8 @@ const styles= StyleSheet.create({
     },
 
     buttonContainer: {
-        flex:1
+        flex:1,
+        
     },
 
     instructionText:{
