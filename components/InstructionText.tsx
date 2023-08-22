@@ -2,8 +2,8 @@ import { StyleSheet } from "react-native";
 import colors from "./colors";
 import { Text } from "react-native";
 
-function InstructionText({children,}: any){
-    return <Text style={styles.instructionText}>{children}</Text>;
+function InstructionText({children, style}: any){
+    return <Text style={[styles.instructionText, style]}>{children}</Text>;
 }
 
 export default InstructionText;
