@@ -1,5 +1,5 @@
 
-import { View, StyleSheet, Alert} from "react-native";
+import { View, StyleSheet, Alert, Text} from "react-native";
 import Title from "../components/Title";
 import { useState, useEffect } from "react";
 
@@ -35,12 +35,19 @@ function GameScreen({userNumber, onGameOver}: any) {
 
     const initialGuess= generateRandomBetween(1,100,userNumber);
     const [currentGuess, setCurrentGuess]=useState(initialGuess);
+    const [guessRouds, setGuessRounds]= useState([initialGuess]);
+    
 
     useEffect(()=> {
         if(currentGuess=== userNumber){
             onGameOver();
         }
     }, [currentGuess, userNumber, onGameOver]);
+
+    useEffect(()=>{
+        minBoundary=1;
+        maxBoundary=100;
+    },[])
 
     function nextGuessHandler(direction: any) { // direction is a string that direct if the number is lower or greater
         if ((direction === "lower" && currentGuess< userNumber) || (direction === "greater" && currentGuess> userNumber)){
@@ -52,9 +59,11 @@ function GameScreen({userNumber, onGameOver}: any) {
         } else{
             minBoundary=currentGuess+1;
         }
+        
         console.log(minBoundary,maxBoundary)
         const newRndNumber=generateRandomBetween(minBoundary, maxBoundary,currentGuess);
         setCurrentGuess(newRndNumber);
+        setGuessRounds(prevGuessRounds => [newRndNumber, ...prevGuessRounds, ]);
     }
 
     return (
@@ -68,6 +77,7 @@ function GameScreen({userNumber, onGameOver}: any) {
                 <View style={styles.buttonContainer}><PrimaryButton onPress={() =>nextGuessHandler("lower")}>{"-"}</PrimaryButton></View>
             </View> 
         </Card>
+        <View>{guessRouds.map(guessRouds => <Text key={guessRouds}>{guessRouds}</Text>)}</View>
     </View>
     )
 }

@@ -9,12 +9,13 @@ function Title({children} : any){
 
 const styles= StyleSheet.create({
     title: {
+        fontFamily: "open-sans-bold",
         textAlign:"center",
         fontSize: 34,
-        fontWeight:'bold',
+        fontWeight:'bold', // i can remove this because of open-sans-bold
         color: colors.myOrange,
         borderWidth:5,
-        borderColor: colors.myOrange,
+        borderColor: colors.myPurple,
         padding: 12,
     }
 })

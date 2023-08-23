@@ -28,7 +28,8 @@ const styles= StyleSheet.create({
     numberText:{
         color: colors.myOrange,
         fontSize: 35,
-        fontWeight: "bold",
+        fontWeight: "bold", // i could remove this lign because pf open=sans=bold
+        fontFamily: "open-sans-bold"
 
     }
 });

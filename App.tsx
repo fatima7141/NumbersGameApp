@@ -7,22 +7,40 @@ import { useState } from 'react';
 import GameScreen from './screens/GameScreen';
 import colors from './components/colors';
 import GameOverScreen from './screens/GameOverScreen';
-
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 
 
 export default function App() { //if i set the background color here it will apear for all my pages 
-  const [userNumber, setUserNumber]= useState();
+  const [userNumber, setUserNumber]= useState<number | null>(null);
 
   const [gameIsOver, setGameIsOver]=useState(true);
+
+  const [guessRounds, setGuessRounds]=useState(0);
+
+  const [fontsLoaded] =useFonts({
+    "open-sams" : require('./assets/fonts/OpenSans-Regular.ttf'),
+    "open-sams-bold" : require('./assets/fonts/OpenSans-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading/>;
+  }
 
   function pickedNumberHandler(pickedNumber: any){
     setUserNumber(pickedNumber);
     setGameIsOver(false);
   }
 
+
   function gameOverHandler(){
-    setGameIsOver(true)
+    setGameIsOver(true);
+  }
+
+  function startNewGameHandler(){
+    setUserNumber(null);
+    setGuessRounds(0);
   }
 
   let screen = <StartGameScreen onPickedNumber={pickedNumberHandler}/>
@@ -32,7 +50,7 @@ export default function App() { //if i set the background color here it will ape
   }
 
   if (gameIsOver && userNumber){
-    screen = <GameOverScreen/>
+    screen = <GameOverScreen userNumber={userNumber} roundsNumber={guessRounds} onSartNewGame={startNewGameHandler}/>
   }
 
   
