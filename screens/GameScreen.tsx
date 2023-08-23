@@ -6,7 +6,9 @@ import { useState, useEffect } from "react";
 import NumberContainer from "../components/NumberContainer";
 import PrimaryButton from "../components/PrimaryButton";
 import Card from "../components/Card";
-import InstructionText from "../components/InstructionText";
+import InstructionText from "../components/InstructionText"
+import GuessLogItem from "../components/GuessLogItem";
+
 
 
 /* function Card({ children }: CardProps) {
@@ -40,7 +42,7 @@ function GameScreen({userNumber, onGameOver}: any) {
 
     useEffect(()=> {
         if(currentGuess=== userNumber){
-            onGameOver();
+            onGameOver(guessRouds.length);
         }
     }, [currentGuess, userNumber, onGameOver]);
 
@@ -66,6 +68,8 @@ function GameScreen({userNumber, onGameOver}: any) {
         setGuessRounds(prevGuessRounds => [newRndNumber, ...prevGuessRounds, ]);
     }
 
+    const guessRoudsListLength= guessRouds.length;
+
     return (
     <View style= {styles.screen}>
         <Title>Oponent's guest</Title>
@@ -77,9 +81,9 @@ function GameScreen({userNumber, onGameOver}: any) {
                 <View style={styles.buttonContainer}><PrimaryButton onPress={() =>nextGuessHandler("lower")}>{"-"}</PrimaryButton></View>
             </View> 
         </Card>
-        <View>
+        <View style={styles.listContainer}>
             <FlatList data={guessRouds}
-            renderItem={(itemData) => <Text>{itemData.item}</Text>}
+            renderItem={(itemData) => <GuessLogItem children={guessRoudsListLength-itemData.index} guess={itemData.item}/>}
             keyExtractor={(item)=>item.toString()}/>
         </View>
     </View>
@@ -109,6 +113,12 @@ const styles= StyleSheet.create({
 
     instructionText:{
         marginBottom: 22,
+    },
+
+    listContainer:{
+        flex: 1,
+        padding: 7,
+        paddingTop: 20,
     }
 
 });

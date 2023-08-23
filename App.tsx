@@ -34,8 +34,9 @@ export default function App() { //if i set the background color here it will ape
   }
 
 
-  function gameOverHandler(){
+  function gameOverHandler(numberOfRounds : any){
     setGameIsOver(true);
+    setGuessRounds(numberOfRounds);
   }
 
   function startNewGameHandler(){

@@ -15,8 +15,10 @@ const styles= StyleSheet.create({
         fontWeight:'bold', // i can remove this because of open-sans-bold
         color: colors.myOrange,
         borderWidth:5,
-        borderColor: colors.myPurple,
+        borderColor: colors.myOrange,
         padding: 12,
+        
+        
     }
 })
 

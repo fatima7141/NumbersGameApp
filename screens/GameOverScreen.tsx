@@ -6,8 +6,7 @@ import PrimaryButton from "../components/PrimaryButton";
 
 
 
-
-function GameOverScreen({roundsNumber, userNumber, onSartNewGame} : any){
+function GameOverScreen({roundsNumber, userNumber, onStartNewGame} : any){
     return( 
         <View style={styles.rootContainer}>
             <Title>Game is Over</Title>
@@ -18,7 +17,7 @@ function GameOverScreen({roundsNumber, userNumber, onSartNewGame} : any){
                 <InstructionText style={styles.instructionText}>Your phone needed <Text style={styles.highlight}>{roundsNumber}</Text> rounds to guess the number <Text style={styles.highlight}>{userNumber}</Text> !</InstructionText>
             </View>
             <View style={styles.centerButton}>
-                <PrimaryButton onPress={onSartNewGame}>Start New Game</PrimaryButton></View>
+                <PrimaryButton onPress={onStartNewGame}>Start New Game</PrimaryButton></View>
             
         </View>
         
