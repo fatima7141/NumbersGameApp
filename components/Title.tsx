@@ -17,6 +17,7 @@ const styles= StyleSheet.create({
         borderWidth:5,
         borderColor: colors.myOrange,
         padding: 12,
+        marginBottom: 39
         
         
     }

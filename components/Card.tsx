@@ -16,7 +16,7 @@ const styles= StyleSheet.create({
         justifyContent: "center", //will position the element along the main axis (top to bottom by default) 
         alignItems: "center", // will position the elements along the cross axis
         padding: 60,
-        marginTop:36,
+        marginTop:5,
         marginHorizontal: 24,
         backgroundColor: colors.myPurple,
         borderRadius:8,

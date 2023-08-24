@@ -15,10 +15,10 @@ export default numberContainer;
 
 const styles= StyleSheet.create({
     container: {
-        borderWidth:4,
+        borderWidth:8,
         borderColor:colors.myPurple,
-        padding: 24,
-        margin:24,
+        padding: 34,
+        margin:14,
         borderRadius: 8, // for rounded corners
         alignItems: "center",
         justifyContent: "center"
